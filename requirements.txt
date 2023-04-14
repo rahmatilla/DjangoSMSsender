@@ -1,0 +1,8 @@
+Django
+django-cors-headers
+django-filter
+djangorestframework
+djangorestframework-simplejwt
+djoser
+psycopg2-binary
+smpplib
