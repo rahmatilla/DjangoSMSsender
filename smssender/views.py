@@ -1,5 +1,5 @@
 from rest_framework import generics, permissions
-from rest_framework.generics import get_object_or_404
+from rest_framework.generics import get_object_or_404, GenericAPIView
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from django_filters.rest_framework import DjangoFilterBackend
@@ -28,8 +28,10 @@ class SMSlogView(generics.ListAPIView):
     queryset = SMSlog.objects.all()
     serializer_class = SMSlogSerializer
 
-class SendSMS(APIView):
-    def post(self, request):
+class SendSMS(GenericAPIView):
+    serializer_class = SMSlogSerializer
+
+    def post(self, request, *args, **kwargs):
         data = request.data
         user = request.user
         data = {
