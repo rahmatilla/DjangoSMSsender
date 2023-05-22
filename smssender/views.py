@@ -57,13 +57,11 @@ class SMSSend(GenericAPIView):
     def post(self, request, *args, **kwargs):
         data = request.data
         user = request.user
-        print('data', data)
         serializer = SMSSendSerializer(data=data)
         if serializer.is_valid():
             tel_number_list = list(SMSReceiver.objects.filter(
                 network=data['network'], criteria__in=data['criteria'], 
                 notification=data['notification']).values_list('tel_number', flat=True))
-            print('tel list:', tel_number_list, len(tel_number_list))
             if len(tel_number_list) > 0:
                 try:
                     send_sms_to_many(src=data['source_addr'].upper(), dest_list=tel_number_list, message=data['sms_text'])
