@@ -2,6 +2,7 @@ from rest_framework import generics, permissions
 from rest_framework.generics import get_object_or_404, GenericAPIView
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework import exceptions
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import status
 from .models import SMSReceiver, SMSlog
@@ -53,19 +54,20 @@ class SMSSend(GenericAPIView):
     serializer_class = SMSSendSerializer
     def post(self, request, *args, **kwargs):
         data = request.data
+        print('data', data)
         serializer = SMSSendSerializer(data=data)
         if serializer.is_valid():
-            tel_number_list = SMSReceiver.objects.filter(
+            tel_number_list = list(SMSReceiver.objects.filter(
                 network=data['network'], criteria__in=data['criteria'], 
-                notification=data['notification']).values_list('tel_number', flat=True)
+                notification=data['notification']).values_list('tel_number', flat=True))
+            print('tel list:', tel_number_list, len(tel_number_list))
             if len(tel_number_list) > 0:
                 try:
                     send_sms_to_many(src=data['source_addr'].upper(), dest_list=tel_number_list, message=data['sms_text'])
                 except Exception as e: print(e)
                 return Response(serializer.data, status=status.HTTP_200_OK)
             else:
-                Response({'status': status.HTTP_404_NOT_FOUND,
-                          'detail': "Receivers with these criterias aren't found"})
+                raise exceptions.NotFound("Receivers with these criterias aren't found")
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
             
 
