@@ -31,7 +31,7 @@ class SMSlogView(generics.ListAPIView):
 
 class SendSMS(GenericAPIView):
     serializer_class = SMSlogSerializer
-
+    permission_classes = [permissions.IsAuthenticated]
     def post(self, request, *args, **kwargs):
         data = request.data
         user = request.user
@@ -45,15 +45,18 @@ class SendSMS(GenericAPIView):
         if serializer.is_valid():
             try:
                 send_sms_to_many(src=data['source_addr'].upper(), dest_list=data['tel_number_list'], message=data['sms_text'])
+                serializer.save()
             except Exception as e: print(e)
-            serializer.save()
+            
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
 class SMSSend(GenericAPIView):
     serializer_class = SMSSendSerializer
+    permission_classes = [permissions.IsAuthenticated]
     def post(self, request, *args, **kwargs):
         data = request.data
+        user = request.user
         print('data', data)
         serializer = SMSSendSerializer(data=data)
         if serializer.is_valid():
@@ -64,8 +67,13 @@ class SMSSend(GenericAPIView):
             if len(tel_number_list) > 0:
                 try:
                     send_sms_to_many(src=data['source_addr'].upper(), dest_list=tel_number_list, message=data['sms_text'])
+                    newsmslog = SMSlog(source_addr=data['source_addr'], sms_text=data['sms_text'], tel_number_list=tel_number_list, 
+                                   user=user.id)
+                    newsmslog.save()
+                    serializer = SMSlogSerializer(newsmslog)
+                    return Response(serializer.data, status=status.HTTP_201_CREATED)
                 except Exception as e: print(e)
-                return Response(serializer.data, status=status.HTTP_200_OK)
+                
             else:
                 raise exceptions.NotFound("Receivers with these criterias aren't found")
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
