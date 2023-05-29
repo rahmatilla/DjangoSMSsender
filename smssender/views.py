@@ -66,7 +66,7 @@ class SMSSend(GenericAPIView):
                 try:
                     send_sms_to_many(src=data['source_addr'].upper(), dest_list=tel_number_list, message=data['sms_text'])
                     newsmslog = SMSlog(source_addr=data['source_addr'], sms_text=data['sms_text'], tel_number_list=tel_number_list, 
-                                   user=user.id)
+                                   user=user)
                     newsmslog.save()
                     serializer = SMSlogSerializer(newsmslog)
                     return Response(serializer.data, status=status.HTTP_201_CREATED)
