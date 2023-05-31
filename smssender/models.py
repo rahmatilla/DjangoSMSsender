@@ -46,7 +46,8 @@ NOTIFICATION_CHOISE = (
 
 SOURCE_ADDRESS = (
     ('ncc-rn', 'NCC-RN'),
-    ('ncc-cn', 'NCC-CN')
+    ('ncc-cn', 'NCC-CN'),
+    ('uzavtosavdo', 'UzAvtoSavdo')
 )
 
 class SMSReceiver(models.Model):
