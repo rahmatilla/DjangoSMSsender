@@ -47,7 +47,6 @@ NOTIFICATION_CHOISE = (
 SOURCE_ADDRESS = (
     ('ncc-rn', 'NCC-RN'),
     ('ncc-cn', 'NCC-CN'),
-    ('uzavtosavdo', 'UzAvtoSavdo')
 )
 
 class SMSReceiver(models.Model):
@@ -64,7 +63,7 @@ class SMSReceiver(models.Model):
         verbose_name_plural = "SMS receivers"
 
 class SMSlog(models.Model):
-    source_addr = models.CharField(max_length=12, choices=SOURCE_ADDRESS)
+    source_addr = models.CharField(max_length=10, choices=SOURCE_ADDRESS)
     sms_text = models.CharField()
     tel_number_list = ArrayField(models.CharField(max_length=12, validators=[only_int]))
     user = models.ForeignKey(User, default=None, on_delete=models.PROTECT)
