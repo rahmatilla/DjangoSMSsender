@@ -73,4 +73,63 @@ class SMSlog(models.Model):
         verbose_name = "SMS log"
         verbose_name_plural = "SMS logs"
     
- 
+TYPE = (
+
+)
+LEVEL = (
+
+)
+CATEGORY = (
+
+)
+RESPONSIBLE_AREA = (
+
+)
+CATEGORY_FOR_HUB = (
+
+)
+CATEGORY_FOR_CORE = (
+
+)
+
+EFFECT = (
+
+)
+
+class AlarmReport(models.Model):
+    type = models.CharField(max_length=30, choices=TYPE)
+    level = models.CharField(max_length=30, choices=LEVEL)
+    category = models.CharField(max_length=30, choices=CATEGORY)
+    responsible_area = models.CharField(max_length=30, choices=RESPONSIBLE_AREA)
+    category_for_hub = models.CharField(max_length=30, choices=CATEGORY_FOR_HUB, )
+    category_for_core = models.CharField(max_length=30, choices=CATEGORY_FOR_CORE)
+    hub_site = models.CharField(max_length=30, default=None, null=True, blank=True)
+    fg_avb = models.CharField(max_length=2, default=None, null=True, blank=True)
+    mw_link = models.CharField(max_length=30, default=None, null=True, blank=True)
+    mw_equipment = models.CharField(max_length=30, default=None, null=True, blank=True)
+    mw_vendor = models.CharField(max_length=30, default=None, null=True, blank=True)
+    bts_vendor = models.CharField(max_length=30, default=None, null=True, blank=True)
+    power_off_time = models.DateTimeField(default=None, null=True, blank=True)
+    sector_block_time = models.DateTimeField(default=None, null=True, blank=True)
+    low_battery_time = models.DateTimeField(default=None, null=True, blank=True)
+    dg_start_time = models.DateTimeField(default=None, null=True, blank=True)
+    battery_life_time = models.TimeField(default=None, null=True, blank=True)
+    chronic_site = models.CharField(max_length=30, default=None, null=True, blank=True)
+    chronic_hours = models.IntegerField(default=None, null=True, blank=True)
+    problem = models.CharField()
+    reason = models.CharField()
+    influence = models.CharField()
+    effect = models.CharField(max_length=30, choices=EFFECT)
+    informed = models.CharField(max_length=100, default=None, null=True, blank=True)
+    start_time = models.DateTimeField()
+    end_time = models.DateTimeField(default=None, null=True, blank=True)
+    duration = models.DurationField(default=None, null=True, blank=True)
+    effect_level = models.CharField(max_length=30)
+    region = models.CharField(max_length=30)
+    description = models.CharField()
+    year = models.IntegerField()
+    month = models.IntegerField()
+    week = models.IntegerField()
+    year_week = models.CharField(max_length=30)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
