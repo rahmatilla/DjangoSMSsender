@@ -5,8 +5,8 @@ from rest_framework.views import APIView
 from rest_framework import exceptions
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import status
-from .models import SMSReceiver, SMSlog
-from .serializers import SMSReceiverSerializer, SMSlogSerializer, SMSSendSerializer
+from .models import SMSReceiver, SMSlog, AlarmReport
+from .serializers import SMSReceiverSerializer, SMSlogSerializer, SMSSendSerializer, AlarmReportSerializers
 from .local_functions import send_sms_to_many
 
 class SMSReceiverView(generics.ListCreateAPIView):
@@ -77,4 +77,12 @@ class SMSSend(GenericAPIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
             
 
+class AlarmReportView(generics.ListCreateAPIView):
+    queryset = AlarmReport.objects.all()
+    serializer_class = AlarmReportSerializers
+    permission_classes = [permissions.IsAuthenticated]
 
+class AlarmReportRetrive(generics.RetrieveUpdateDestroyAPIView):
+    queryset = AlarmReport.objects.all()
+    serializer_class = AlarmReportSerializers  
+    permission_classes = [permissions.IsAuthenticated]

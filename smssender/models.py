@@ -74,25 +74,64 @@ class SMSlog(models.Model):
         verbose_name_plural = "SMS logs"
     
 TYPE = (
+    ("BSC/RNC", 'BSC/RNC'),
+    ("BTS", 'BTS'),
+    ("CORE", 'CORE'),
 
 )
 LEVEL = (
+    ("A1", 'A1'),
+    ("A2", 'A2'),
+    ("A3", 'A3'),
+    ("A4", 'A4'),
+    ("A5", 'A5'),
+    ("ПР", 'ПР')
 
 )
 CATEGORY = (
+    ("Тех проблема", "Тех проблема"),
+    ("ЭС и Клим", 'ЭС и Клим'),
+    ("ПР", 'ПР'),
+    ("Выясняется", 'Выясняется')
 
 )
 RESPONSIBLE_AREA = (
+    ("Другие ЗО", "Другие ЗО"),
+    ("Эксплуатация", 'Эксплуатация'),
+    ("Выясняется", 'Выясняется')
 
 )
 CATEGORY_FOR_HUB = (
+    ("AC/DC breaker", "AC/DC breaker"),
+    ("Bad RX level", "Bad RX level"),
+    ("High Temp", "High Temp"),
+    ("Incorrect work", "Incorrect work"),
+    ("Leased Line", "Leased Line"),
+    ("Low voltage", "Low voltage"),
+    ("Power", "Power"),
+    ("TI_DNO", "TI_DNO"),
+    ("TI_ESO", "TI_ESO"),
+    ("TI_MW", "TI_MW"),
+    ("TI_SAQ", "TI_SAQ"),
+    ("TI_SDH", "TI_SDH"),
+    ("Unplanned work", "Unplanned work"),
+    ("WB", "WB"),
+    ("Выясняется", "Выясняется"),
 
 )
 CATEGORY_FOR_CORE = (
+    ("Core", "Core"),
+    ("GPRS", "GPRS"),
+    ("Roaming", "Roaming"),
+    ("MPLS", "MPLS"),
+    ("Power", "Power"),
+    ("High Temp", "High Temp")
 
 )
 
 EFFECT = (
+    ("С влиянием", "С влиянием"),
+    ("Без влияния", "Без влияния")
 
 )
 
@@ -101,8 +140,8 @@ class AlarmReport(models.Model):
     level = models.CharField(max_length=30, choices=LEVEL)
     category = models.CharField(max_length=30, choices=CATEGORY)
     responsible_area = models.CharField(max_length=30, choices=RESPONSIBLE_AREA)
-    category_for_hub = models.CharField(max_length=30, choices=CATEGORY_FOR_HUB, )
-    category_for_core = models.CharField(max_length=30, choices=CATEGORY_FOR_CORE)
+    category_for_hub = models.CharField(max_length=30, choices=CATEGORY_FOR_HUB, default=None, null=True, blank=True)
+    category_for_core = models.CharField(max_length=30, choices=CATEGORY_FOR_CORE, default=None, null=True, blank=True)
     hub_site = models.CharField(max_length=30, default=None, null=True, blank=True)
     fg_avb = models.CharField(max_length=2, default=None, null=True, blank=True)
     mw_link = models.CharField(max_length=30, default=None, null=True, blank=True)
@@ -118,18 +157,18 @@ class AlarmReport(models.Model):
     chronic_hours = models.IntegerField(default=None, null=True, blank=True)
     problem = models.CharField()
     reason = models.CharField()
-    influence = models.CharField()
+    influence = models.CharField(max_length=100, default=None, null=True, blank=True)
     effect = models.CharField(max_length=30, choices=EFFECT)
     informed = models.CharField(max_length=100, default=None, null=True, blank=True)
     start_time = models.DateTimeField()
     end_time = models.DateTimeField(default=None, null=True, blank=True)
     duration = models.DurationField(default=None, null=True, blank=True)
-    effect_level = models.CharField(max_length=30)
+    #effect_level = models.CharField(max_length=30)
     region = models.CharField(max_length=30)
-    description = models.CharField()
-    year = models.IntegerField()
-    month = models.IntegerField()
-    week = models.IntegerField()
-    year_week = models.CharField(max_length=30)
+    description = models.CharField(default=None, null=True, blank=True)
+    # year = models.IntegerField()
+    # month = models.IntegerField()
+    # week = models.IntegerField()
+    # year_week = models.CharField(max_length=30)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
