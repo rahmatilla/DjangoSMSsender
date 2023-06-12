@@ -80,8 +80,10 @@ class SMSSend(GenericAPIView):
 class AlarmReportView(generics.ListCreateAPIView):
     queryset = AlarmReport.objects.all()
     serializer_class = AlarmReportSerializers
-    permission_classes = [permissions.IsAuthenticated]
-
+    #permission_classes = [permissions.IsAuthenticated]
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = "__all__"
+    
 class AlarmReportRetrive(generics.RetrieveUpdateDestroyAPIView):
     queryset = AlarmReport.objects.all()
     serializer_class = AlarmReportSerializers  

@@ -172,3 +172,4 @@ class AlarmReport(models.Model):
     # year_week = models.CharField(max_length=30, verbose_name="Неделя+Год")
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Создан в")
     updated_at = models.DateTimeField(auto_now=True, verbose_name="Обновлено в")
+    is_complete = models.BooleanField(default=False)
