@@ -83,6 +83,7 @@ class AlarmReportView(generics.ListCreateAPIView):
     #permission_classes = [permissions.IsAuthenticated]
     filter_backends = [DjangoFilterBackend]
     filterset_fields = "__all__"
+
     
 class AlarmReportRetrive(generics.RetrieveUpdateDestroyAPIView):
     queryset = AlarmReport.objects.all()
