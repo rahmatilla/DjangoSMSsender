@@ -182,7 +182,7 @@ class AlarmReport(models.Model):
             self.is_complete = True
         self.year = self.start_time.year
         self.month = self.start_time.month
-        self.week =  datetime.date(self.start_time.year, self.start_time.month, self.start_time.day).isocalendar().week
+        self.week =  datetime.date(self.start_time.year, self.start_time.month, self.start_time.day).isocalendar()[1]
         self.year_week = str(self.year) + '_' + str(self.week)
         self.effect_level = self.effect + ' ' + self.level
         super(AlarmReport, self).save(*args, **kwargs)
