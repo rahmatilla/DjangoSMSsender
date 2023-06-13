@@ -173,7 +173,7 @@ class AlarmReport(models.Model):
     effect_level = models.CharField(max_length=30, verbose_name="Уровень + Эффект", editable=False)
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Создан в")
     updated_at = models.DateTimeField(auto_now=True, verbose_name="Обновлено в")
-    is_complete = models.BooleanField(default=False)
+    is_complete = models.BooleanField(default=False, editable=False)
     user = models.ForeignKey(User, on_delete=models.PROTECT)
 
     def save(self, *args, **kwargs):
