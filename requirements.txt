@@ -6,3 +6,4 @@ djangorestframework-simplejwt
 djoser
 psycopg2-binary
 smpplib
+python-dotenv
