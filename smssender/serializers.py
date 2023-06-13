@@ -11,6 +11,7 @@ class SMSlogSerializer(serializers.ModelSerializer):
         fields = ('id', 'source_addr', 'sms_text', 'tel_number_list', 'user', 'sent_time')
 
 class AlarmReportSerializers(serializers.ModelSerializer):
+
     class Meta:
         model = AlarmReport
         fields = '__all__'

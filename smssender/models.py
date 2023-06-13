@@ -2,6 +2,7 @@ from django.db import models
 from django.core.exceptions import ValidationError
 from django.contrib.postgres.fields import ArrayField
 from django.contrib.auth.models import User
+import datetime
 
 
 def only_int(value): 
@@ -162,14 +163,26 @@ class AlarmReport(models.Model):
     informed = models.CharField(max_length=100, default=None, null=True, blank=True, verbose_name="Информирован")
     start_time = models.DateTimeField(verbose_name="Начало")
     end_time = models.DateTimeField(default=None, null=True, blank=True, verbose_name="Конец")
-    duration = models.DurationField(default=None, null=True, blank=True, verbose_name="Длительность")
-    #effect_level = models.CharField(max_length=30, verbose_name="Уровень + Эффект")
+    duration = models.DurationField(default=None, null=True, blank=True, verbose_name="Длительность", editable=False)
     region = models.CharField(max_length=30, verbose_name="Регион")
     description = models.CharField(default=None, null=True, blank=True, verbose_name="Описание")
-    # year = models.IntegerField(verbose_name="Год")
-    # month = models.IntegerField(verbose_name="Месяц")
-    # week = models.IntegerField(verbose_name="Неделя")
-    # year_week = models.CharField(max_length=30, verbose_name="Неделя+Год")
+    year = models.IntegerField(verbose_name="Год", editable=False)
+    month = models.IntegerField(verbose_name="Месяц", editable=False)
+    week = models.IntegerField(verbose_name="Неделя", editable=False)
+    year_week = models.CharField(max_length=30, verbose_name="Неделя+Год", editable=False)
+    effect_level = models.CharField(max_length=30, verbose_name="Уровень + Эффект", editable=False)
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Создан в")
     updated_at = models.DateTimeField(auto_now=True, verbose_name="Обновлено в")
     is_complete = models.BooleanField(default=False)
+    user = models.ForeignKey(User, on_delete=models.PROTECT)
+
+    def save(self, *args, **kwargs):
+        if self.end_time:
+            self.duration = self.end_time - self.start_time
+            self.is_complete = True
+        self.year = self.start_time.year
+        self.month = self.start_time.month
+        self.week =  datetime.date(self.start_time.year, self.start_time.month, self.start_time.day).isocalendar().week
+        self.year_week = str(self.year) + '_' + str(self.week)
+        self.effect_level = self.effect + ' ' + self.level
+        super(AlarmReport, self).save(*args, **kwargs)
