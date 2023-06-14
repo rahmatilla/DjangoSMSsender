@@ -174,7 +174,7 @@ class AlarmReport(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Создан в")
     updated_at = models.DateTimeField(auto_now=True, verbose_name="Обновлено в")
     is_complete = models.BooleanField(default=False, editable=False)
-    user = models.ForeignKey(User, on_delete=models.PROTECT)
+    user = models.ForeignKey(User, on_delete=models.PROTECT, editable=False)
 
     def save(self, *args, **kwargs):
         if self.end_time:
