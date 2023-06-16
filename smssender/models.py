@@ -10,39 +10,39 @@ def only_int(value):
         raise ValidationError('Phone number contains characters')
 
 NETWORK_CHOISE = (
-    ("cn", 'CN'),
-    ("rn", 'RN')
+    ("CN", 'CN'),
+    ("RN", 'RN')
 )
 # NETWORK_CHOISE = ('CN', 'RN')
 CRITERIA_CHOISE = (
-    ("a2", 'A2'),
-    ("a3", 'A3'),
-    ("a4", 'A4'),
-    ("a5", 'A5'),
-    ("an", 'Andijan'),
-    ("bh", 'Bukhara'),
-    ("dz", 'Djizzakh'),
-    ("fr", 'Fergana'),
-    ("sr", 'Sirdarya'),
-    ("ks", 'Kashkadarya'),
-    ("nm", 'Namangan'),
-    ("nv", 'Navoi'),
-    ('kr', 'Karakalpakstan'),
-    ("sm", 'Samarkand'),
-    ("ts", 'Tashkent'),
-    ("su", 'Surkhandarya'),
-    ("kh", 'Khorezm'),
+    ("A2", 'A2'),
+    ("A3", 'A3'),
+    ("A4", 'A4'),
+    ("A5", 'A5'),
+    ("Andijan", 'Andijan'),
+    ("Bukhara", 'Bukhara'),
+    ("Djizzakh", 'Djizzakh'),
+    ("Fergana", 'Fergana'),
+    ("Sirdarya", 'Sirdarya'),
+    ("Kashkadarya", 'Kashkadarya'),
+    ("Namangan", 'Namangan'),
+    ("Navoi", 'Navoi'),
+    ('Karakalpakstan', 'Karakalpakstan'),
+    ("Samarkand", 'Samarkand'),
+    ("Tashkent", 'Tashkent'),
+    ("Surkhandarya", 'Surkhandarya'),
+    ("Khorezm", 'Khorezm'),
 )
 
 NOTIFICATION_CHOISE = (
-    ("internet", 'Internet Incidents'),
-    ("roaming", 'Roaming Incidents'),
-    ("core", 'Core Incidents'),
-    ("power", 'Power Incidents'),
-    ("controller", 'BSC/RNC Incidents'),
-    ("chronic", 'Chronic-Down Sites'),
-    ("hub", 'HUB Sites Incidents'),
-    ("report", 'Report Message'),
+    ("Internet", 'Internet Incidents'),
+    ("Roaming", 'Roaming Incidents'),
+    ("Core", 'Core Incidents'),
+    ("Power/HighTemp", 'Power/HighTemp Incidents'),
+    ("BSC/RNC", 'BSC/RNC Incidents'),
+    ("Chronic", 'Chronic-Down Sites'),
+    ("Hub", 'HUB Sites Incidents'),
+    ("Report", 'Report Message'),
 )
 
 SOURCE_ADDRESS = (
