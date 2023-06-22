@@ -76,7 +76,8 @@ class SMSlog(models.Model):
     
 TYPE = (
     ("BSC/RNC", 'BSC/RNC'),
-    ("BTS", 'BTS'),
+    ("HUB", 'HUB'),
+    ("CHRONIC", 'CHRONIC'),
     ("CORE", 'CORE'),
 
 )
