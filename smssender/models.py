@@ -35,7 +35,7 @@ CRITERIA_CHOISE = (
 )
 
 NOTIFICATION_CHOISE = (
-    ("Internet", 'Internet Incidents'),
+    ("GPRS", 'GPRS Incidents'),
     ("Roaming", 'Roaming Incidents'),
     ("Core", 'Core Incidents'),
     ("Power/HighTemp", 'Power/HighTemp Incidents'),
